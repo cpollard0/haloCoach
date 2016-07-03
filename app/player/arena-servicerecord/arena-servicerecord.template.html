@@ -1,0 +1,10 @@
+<ul>
+    <li ng-repeat="arenaResults in $ctrl.seasonData.Results">
+        <span ng-repeat="arenaResult in arenaResults">
+            {{arenaResult.ArenaStats}}</span>
+        <span ng-repeat="arenaPlaylist in arenaResult">{{arenaPlayList}}
+            </span>
+        </span>
+    </li>
+</ul>
+<p>This is your arena service record:{{$ctrl.seasonData}}</p>

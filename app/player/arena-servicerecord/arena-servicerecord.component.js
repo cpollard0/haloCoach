@@ -3,7 +3,7 @@
  */
 'use strict';
 
-// Register `phoneList` component, along with its associated controller and template
+// Register component, along with its associated controller and template
 angular.
 module('arenaServiceRecord').
 component('arenaServiceRecord', {
@@ -17,7 +17,7 @@ component('arenaServiceRecord', {
         var playerName = "MrPierceClayton";
         //https://www.haloapi.com/stats/h5/servicerecords/arena?players=" + playerName"[&seasonId]
         $http.get("https://www.haloapi.com/stats/h5/servicerecords/arena?players=" + playerName,config).then(function(response) {
-            self.seasonData = response.data; 
+            self.seasonData = response.data;
         });
     }
 });

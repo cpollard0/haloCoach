@@ -1,0 +1,3 @@
+<select id="seasonDropdown" title="Season Dropdown" [(ngModel)]="seasonDD">
+  <option [ngValue]="season.contentId" *ngFor="let season of seasonData">{{season.name}}</option>
+</select>

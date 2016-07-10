@@ -1,0 +1,24 @@
+
+    <div ng-repeat="arenaResults in $ctrl.seasonData.Results">
+        <div ng-repeat="arenaResult in arenaResults">
+             <div ng-repeat="ArenaPlaylist in  arenaResult.ArenaStats.ArenaPlaylistStats">
+                <table>
+                    <thead>
+                        <tr>
+                            <td colspan="2">Playlist: {{ArenaPlaylist.PlaylistId}}</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Total Kills:</td>
+                        <td> {{ArenaPlaylist.TotalKills}}</td>
+                    </tr>
+                    <tr>
+                 <td>% of shots headshot (fired): {{(ArenaPlaylist.TotalHeadshots/ArenaPlaylist.TotalShotsFired)*100| number:2}}%</td>
+                    </tr>
+                <tr><td> % of shots headshot (landed): {{(ArenaPlaylist.TotalHeadshots/ArenaPlaylist.TotalShotsLanded)*100| number:2}}%</td>
+                </tr>
+                </table>
+             </div>
+        </div>
+    </div>
+<p>This is your arena service record:{{$ctrl.seasonData}}</p>

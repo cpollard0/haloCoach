@@ -10,6 +10,7 @@ import {Halo5API} from '../../../services/halo5API';
 import {Observable} from 'rxjs/Observable';
 import {SeasonDropdown} from '../../metadata/season-dropdown/season-dropdown';
 import {ArenaStatsClass} from '../../../model/arenaStats.model';
+import {ArenaPlaylistStats} from '../../../model/arenaStats.Results.Result.ArenaStats.ArenaPlaylistStats.model'
 
 @Component({
   selector: 'arena-stats',
@@ -22,7 +23,9 @@ import {ArenaStatsClass} from '../../../model/arenaStats.model';
 
 export class ArenaStats{
   public arenaStats : ArenaStatsClass;
-  public seasonFilter: string;
+  //public playlistStats : Array<ArenaPlaylistStats>;
+
+  public playlistStats:ArenaPlaylistStats[];
   constructor(public haloAPI: Halo5API) {};
   ngOnInit() {
     this.makeAPICall("MrPierceClayton","");
@@ -39,7 +42,10 @@ export class ArenaStats{
         // the third argument is a function which runs on completion
         () =>
         {
-          console.log(this.arenaStats);
+          console.log(this.arenaStats.Results[0].Result.ArenaStats);
+          //  console.log(this.arenaStats.Results[0].Result.ArenaStats[0].ArenaPlaylistStats);
+          this.playlistStats = this.arenaStats.Results[0].Result.ArenaStats.ArenaPlaylistStats;
+          console.log(this.playlistStats[1].Csr);
         }
       );
   };

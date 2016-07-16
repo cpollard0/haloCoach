@@ -27,7 +27,6 @@ export class MatchEvent {
   VictimWorldLocation:WorldLocation;
   WeaponName:string;
   WeaponStockId:string;
-
   constructor() {
     //  if (this.EventName = 'Death') this.IsDeath = true;
   }

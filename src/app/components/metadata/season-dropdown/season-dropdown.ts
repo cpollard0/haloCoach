@@ -27,6 +27,8 @@ export class SeasonDropdown implements OnInit{
         err => console.error(err),
         // the third argument is a function which runs on completion
         () => {
+          this.seasonData[0].thing = "test";
+          console.log(this.seasonData);
         }
       );
   }

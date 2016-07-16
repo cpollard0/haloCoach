@@ -1,6 +1,10 @@
 
 <season-dropdown #t (change)="seasonChanged($event,t.value)" ></season-dropdown>
-
+<div id="playlistStats" *ngFor="let playStats of playlistStats">
+  Playlist: {{playStats.PlaylistId}}
+  Measurement matches left: {{playStats.MeasurementMatchesLeft}}
+  <span *ngIf="playStats.Csr">Tier: {{playStats.Csr.Tier}} Tier Name: {{playStats.Csr.TierName}}</span>
+</div>
 <div id="arenaStats" >
   {{arenaStats}}
 </div>

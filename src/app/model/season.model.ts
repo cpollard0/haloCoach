@@ -8,6 +8,7 @@ export class Season {
   endDate:string;
   iconUrl:string;
   contentId:string;
+  thing:string;
   playlists:Array<Playlist>;
   constructor(seasonInfo:any) {
     this.name = seasonInfo.name;
@@ -16,5 +17,6 @@ export class Season {
     this.iconUrl = seasonInfo.iconUrl;
     this.contentId = seasonInfo.contentId;
     this.playlists = seasonInfo.playlists;
+    this.thing = "Test";
   }
 }

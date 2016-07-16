@@ -3,14 +3,10 @@
  */
 
 
-import {ArenaStatsResultsClass} from './arenaStats.Result.model';
+import {ArenaStatsResultsClass} from './arenaStats.Results.model';
 
 export class ArenaStatsClass {
   Results:Array<ArenaStatsResultsClass>;
-  TotalAssasinations:number;
-  TotalAssists:number;
-  TotalDeaths:number;
-  TotalGamesCompleted:number;
   constructor() {
   }
 }

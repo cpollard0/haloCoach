@@ -16,19 +16,30 @@ import {Season} from '../../../model/season.model';
 })
 export class SeasonDropdown implements OnInit{
   public seasonData : Array<Season>;
+  sesTest:Season;
   constructor(public haloAPI: Halo5API) {};
   ngOnInit() {
     //this.haloAPI.getSeasonMetadata();
     this.haloAPI.getSeasonMetadata()
       .subscribe(
         // the first argument is a function which runs on success
-        data => { this.seasonData = data},
+        data => {
+
+          //deserialize the JSON into the object
+          /*let seasonDeserialized: Array<Season> = data.map(function(x) {
+           var xy = new Season().deserialize(x);
+           return xy; }
+           );*/
+          this.seasonData = data.map(function (x) {
+              return new Season().deserialize(x);
+            }
+          );
+        },
         // the second argument is a function which runs on error
         err => console.error(err),
         // the third argument is a function which runs on completion
         () => {
-          this.seasonData[0].thing = "test";
-          console.log(this.seasonData);
+
         }
       );
   }

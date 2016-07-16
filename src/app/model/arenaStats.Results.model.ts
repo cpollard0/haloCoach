@@ -9,4 +9,15 @@ export class ArenaStatsResultsClass {
   Result: ArenaStatsArenaResultClass;
   constructor() {
   }
+
+  deserialize(input) {
+
+    this.Id = input.Id;
+    this.ResultCode = input.ResultCode;
+    this.Result = input.Result.map(function (x) {
+        return new ArenaStatsArenaResultClass().deserialize(x);
+      }
+    );
+    return this;
+  }
 }

@@ -14,4 +14,16 @@ export class ArenaStatsArenaResultClass {
   constructor() {
 
   }
+
+
+  deserialize(input) {
+
+    this.SpartanRank = input.SpartanRank;
+    this.XP = input.XP;
+    this.ArenaStats = input.ArenaStats.map(function (x) {
+        return new ArenaStatsClass().deserialize(x);
+      }
+    );
+    return this;
+  }
 }

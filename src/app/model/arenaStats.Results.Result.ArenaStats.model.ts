@@ -10,4 +10,15 @@ export class ArenaStatsClass {
 
   constructor() {
   }
+
+  deserialize(input) {
+
+    this.TotalAssists = input.TotalAssists;
+    this.TotalGamesWon = input.TotalGamesWon;
+    this.ArenaPlaylistStats = input.ArenaPlaylistStats.map(function (x) {
+        return new ArenaPlaylistStats().deserialize(x);
+      }
+    );
+    return this;
+  }
 }

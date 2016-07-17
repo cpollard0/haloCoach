@@ -3,7 +3,7 @@
 <div id="playlistStats" *ngFor="let playStats of playlistStats">
   Playlist: {{playStats.PlaylistId}}
   Measurement matches left: {{playStats.MeasurementMatchesLeft}}
-  <span *ngIf="playStats.Csr">Tier: {{playStats.Csr.Tier}} Tier Name: {{playStats.Csr.TierName}}</span>
+  <span *ngIf="playStats.Csr">Ranking: {{playStats.Csr.DesignationName}} ({{playStats.Csr.Tier}})</span>
 </div>
 <div id="arenaStats" >
   {{arenaStats}}

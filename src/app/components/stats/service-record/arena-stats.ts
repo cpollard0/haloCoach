@@ -42,15 +42,16 @@ export class ArenaStats{
         // the third argument is a function which runs on completion
         () =>
         {
-          console.log(this.arenaStats.Results[0].Result.ArenaStats.ArenaPlaylistStats);
           var plist = this.arenaStats.Results[0].Result.ArenaStats.ArenaPlaylistStats.map(function (x) {
               return new ArenaPlaylistStats().deserialize(x);
             }
           );
+          /*var test = this.arenaStats.Results.map(function (x){
+           return new ArenaStatsClass().deserialize(x);
+           });*/
           console.log(plist);
           //  console.log(this.arenaStats.Results[0].Result.ArenaStats[0].ArenaPlaylistStats);
-          this.playlistStats = this.arenaStats.Results[0].Result.ArenaStats.ArenaPlaylistStats;
-          console.log(this.playlistStats[1].Csr);
+          this.playlistStats = plist;
         }
       );
   };

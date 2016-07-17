@@ -27,8 +27,9 @@ export class MatchEvent {
   VictimWorldLocation:WorldLocation;
   DistanceBetweenLocations:WorldLocation;
   WeaponName:string;
-  WeaponStockId:string;
-  Thing:string;
+  WeaponStockId:number;
+  KillerWeaponStockId:number;
+  KillerWeaponName:string;
 
   constructor() {
 
@@ -38,12 +39,12 @@ export class MatchEvent {
     //this.DesignationName = input.DesignationName;
     this.EventName = input.EventName;
     this.IsDeath = false;
-    this.Thing = "2452";
     //this.IsDeath = this.EventName ==  "40Death";
     this.TimeSinceStart = input.TimeSinceStart;
     this.ShotsFired = input.ShotsFired;
     this.TimeWeaponActiveAsPrimary = input.TimeWeaponActiveAsPrimary;
-    //this.Assistants = input.PlayerClass;
+    if (input.Assistants != null)
+      this.Assistants = new PlayerClass().deserialize(input.Assistants);
     this.IsDeath = input.IsDeath;
     this.IsAssassination = input.IsAssassination;
     this.IsGroundPound = input.IsGroundPound;
@@ -51,9 +52,13 @@ export class MatchEvent {
     this.IsMelee = input.IsMelee;
     this.IsShoulderBash = input.IsShoulderBash;
     this.IsWeapon = input.IsWeapon;
-    //this.Killer = input.PlayerClass;
+    if (input.Player != null)
+      this.Player = new PlayerClass().deserialize(input.Player);
+    if (input.Killer != null)
+      this.Killer = new PlayerClass().deserialize(input.Killer);
     this.KillerAgent = input.KillerAgent;
-    //this.Victim = input.PlayerClass;
+    if (input.Victim != null)
+      this.Victim = new PlayerClass().deserialize(input.Victim);
     this.VictimAgent = input.VictimAgent;
     if (input.KillerWorldLocation != null)
       this.KillerWorldLocation = new WorldLocation().deserialize(input.KillerWorldLocation);
@@ -61,13 +66,18 @@ export class MatchEvent {
     if (input.VictimWorldLocation != null)
       this.VictimWorldLocation = new WorldLocation().deserialize(input.VictimWorldLocation);
     this.WeaponName = input.WeaponName;
+    if (input.KillerWeaponStockId != null) {
+      this.KillerWeaponStockId = input.KillerWeaponStockId;
+      this.KillerWeaponName = "Unknown from class";
+    }
     /*if (input.VictimWorldLocation != null && input.KillerWorldLocation != null)
      {
      this.DistanceBetweenLocations.x = this.KillerWorldLocation.x - this.VictimWorldLocation.x;
      this.DistanceBetweenLocations.y = this.KillerWorldLocation.y - this.VictimWorldLocation.y;
      this.DistanceBetweenLocations.z = this.KillerWorldLocation.z - this.VictimWorldLocation.z;
      }*/
-    this.WeaponStockId = input.WeaponStockId;
+    if (input.WeaponStockId != null)
+      this.WeaponStockId = input.WeaponStockId;
     return this;
   }
 }

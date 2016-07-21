@@ -22,11 +22,17 @@ export class Halo5API {
     return this.makeRequest('metadata/h5/metadata/seasons');
   };
 
+  getMapData() {
+    return this.makeRequest('/etadata/h5/metadata/maps');
+  };
   getEmblemImage(playerName:string) {
     return this.makeRequest('profile/h5/profiles/' + playerName + '/emblem');
   };
 
+  getMatchesForPlayer(playerName:string, mode:string, startMatch:number, endMatch:number) {
+    return this.makeRequest('stats/h5/players/' + playerName + '/matches?modes=' + mode + '&start=' + startMatch + '&count=' + endMatch)
 
+  }
   getWeapons() {
     return this.makeRequest('metadata/h5/metadata/weapons');
   };

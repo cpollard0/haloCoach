@@ -1,0 +1,23 @@
+<select id="playerDropDown" title="Player Dropdown" [(ngModel)]="playerDD">
+  <option [ngValue]="player" *ngFor="let player of playerEvents">{{player}}</option>
+</select>
+
+
+<table>
+  <tr *ngFor="let gameEvent of GameEvents">
+    <td>{{gameEvent.Player?.Gamertag}}</td>
+    <td>{{gameEvent.EventName}}</td>
+    <td>{{gameEvent.TimeSinceStart}}</td>
+    <!--<td *ngIf="gameEvent.IsDeath">{{gameEvent.Killer?.Gamertag}} killed {{gameEvent.Victim?.Gamertag}}</td>-->
+    <td *ngIf="gameEvent.Killer?.Gamertag">
+      {{gameEvent.Killer?.Gamertag}} killed {{gameEvent.Victim?.Gamertag}} at {{gameEvent.VictimWorldLocation?.x}}
+
+    <span *ngIf="gameEvent.KillerWorldLocation.z > gameEvent.VictimWorldLocation.z">Death from above at a height of
+    {{gameEvent.KillerWorldLocation.z - gameEvent.VictimWorldLocation.z}}
+    </span>
+    </td>
+
+
+  </tr>
+
+</table>

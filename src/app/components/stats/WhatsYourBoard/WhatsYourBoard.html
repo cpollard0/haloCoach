@@ -1,1 +1,22 @@
-We'll figure this out once and for all!
+<br>
+<table>
+  <tr>
+    <th>Map Name</th>
+    <th>Total Plays</th>
+    <th>Total Wins</th>
+    <th>Win %</th>
+    <th>Avg Game</th>
+    <th>Avg Kills</th>
+    <th>Avg Deaths</th>
+  </tr>
+  <tr *ngFor="let mapStat of mapStatsArray">
+    <td>{{mapStat.MapName.name}}</td>
+    <td>{{mapStat.TotalMatches}}</td>
+    <td>{{mapStat.TotalWins}}</td>
+    <td>{{mapStat.TotalWins/mapStat.TotalMatches}}</td>
+    <td>{{(mapStat.TotalKills - mapStat.TotalDeaths)/mapStat.TotalMatches | percent}}</td>
+    <td>{{(mapStat.TotalKills)/mapStat.TotalMatches}}</td>
+    <td>{{(mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
+
+  </tr>
+</table>

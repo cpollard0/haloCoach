@@ -23,7 +23,7 @@ export class Halo5API {
   };
 
   getMapData() {
-    return this.makeRequest('/etadata/h5/metadata/maps');
+    return this.makeRequest('metadata/h5/metadata/maps');
   };
   getEmblemImage(playerName:string) {
     return this.makeRequest('profile/h5/profiles/' + playerName + '/emblem');

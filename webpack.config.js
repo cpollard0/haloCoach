@@ -81,7 +81,7 @@ var defaultConfig = {
     clearImmediate: 0,
     setImmediate: 0
   },
-}
+};
 
 var webpackMerge = require('webpack-merge');
 module.exports = webpackMerge(defaultConfig, webpackConfig);

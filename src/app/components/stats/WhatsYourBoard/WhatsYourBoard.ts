@@ -2,7 +2,8 @@
  * Created by Chris on 7/18/16.
  * Looking at your last 100 games, how do you do on each board?
  */
-import {Component, Pipe, PipeTransform} from '@angular/core';
+import {Component, Pipe, PipeTransform, Input} from '@angular/core';
+import {CORE_DIRECTIVES} from '@angular/common';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {Halo5API} from '../../../services/halo5API';
 import {Observable} from 'rxjs/Observable';
@@ -14,6 +15,7 @@ import {MapMetadata} from '../../../model/MapMetadata.model';
 @Component({
   selector: 'whats-your-board',
   pipes: [],
+  inputs: ['playerName'],
   providers: [Halo5API],
   directives: [ROUTER_DIRECTIVES, SeasonDropdown],
   templateUrl: './WhatsYourBoard.html',
@@ -22,17 +24,19 @@ import {MapMetadata} from '../../../model/MapMetadata.model';
 
 export class WhatsYourBoard {
   public pMatchOver:Array<MatchOverview>;
-  private totalRecords:number = 75;
+  private totalRecords:number = 125;
   public mapStats:MapStats;
   public MapData:Array<MapMetadata>;
+  public PlayerName:string;
   public mapStatsArray:Array<MapStats>;
-
+  @Input() playerName;
   constructor(public haloAPI:Halo5API) {
   };
 
   ngOnInit() {
+    // this.PlayerName = "RBPOLLARD";
     this.getMapMetadata();
-    this.getMatchData("MrPierceClayton", "", 1, 25);
+    //this.getMatchData(this.PlayerName, "", 1, 25);
   }
 
   private getMapMetadata() {
@@ -47,7 +51,6 @@ export class WhatsYourBoard {
         },
         err => console.error(err),
         () => {
-          console.log(this.MapData);
         }
       )
   }
@@ -109,15 +112,7 @@ export class WhatsYourBoard {
       distinctMapArray.push(entry.MapId);
       return true;
     });
-    var highestKills = 0;
-    var leastKills = 0;
-    var mostDeaths = 0;
-    var bestKDSpread = 0;
     var matchEvents;
-    var totalGames = 0;
-    var avgKDSpread = 0;
-    var totalKills = 0;
-    var totalDeaths = 0;
 
     var mpArrLocal = new Array<MapStats>();
 
@@ -160,6 +155,9 @@ export class WhatsYourBoard {
         mpLocal.TotalDeaths = matchEvents.reduce(function (total, o) {
           return total + o.TotalDeaths;
         }, 0);
+        mpLocal.TotalAssists = matchEvents.reduce(function (total, o) {
+          return total + o.TotalAssists;
+        }, 0);
         mpLocal.TotalMatches = matchEvents.length;
         mpLocal.TotalWins = matchEvents.reduce(function (total, o) {
           if (o.Result == 3)
@@ -167,15 +165,22 @@ export class WhatsYourBoard {
           else return total;
         }, 0);
         mpLocal.MapName = this.MapData.filter(item => item.contentId == matchId)[0];
-        console.log(matchEvents);
         mpArrLocal.push(mpLocal);
         //mapRcd.mapId = matchOutcome;
         //mapRcd.wins = 5;
       }
       , this);
+    console.log(mpArrLocal);
+    mpArrLocal.sort(function (a, b) {
+      return (b.TotalKills - b.TotalDeaths) / b.TotalMatches - (a.TotalKills - a.TotalDeaths) / a.TotalMatches;
+    });
     this.mapStatsArray = mpArrLocal;
     console.log(mpArrLocal);
   }
 
+  public playerChanged($event, val) {
+    this.PlayerName = $event.target.value;
+    this.getMatchData(this.PlayerName, "", 1, 25);
+  };
 }
 

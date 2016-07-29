@@ -13,9 +13,6 @@ export class Halo5API {
   private headers:Headers;
 
   constructor(private http:Http) {
-    this.headers = new Headers();
-
-    this.headers.append('Ocp-Apim-Subscription-Key', 'c2a9961279f34f89b478c962a083b2eb');
   }
 
   getSeasonMetadata() {
@@ -54,7 +51,12 @@ export class Halo5API {
   private makeRequest(path:string) {
     //this.http.headers = new(Headers);
 
-    let url = 'https://www.haloapi.com/' + path;
+    this.headers = new Headers();
+
+    this.headers.append('Ocp-Apim-Subscription-Key', 'c2a9961279f34f89b478c962a083b2eb');
+    this.headers.append('Access-Control-Allow-Origin', '*');
+    this.headers.append('X-Proxy-Url', 'https://www.haloapi.com/' + path);
+    let url = 'http://52.21.253.156/';
     //this.config.ApiUrl + '/${ path }';
     return this.http.get(url, {headers: this.headers})
       .map(res => res.json());

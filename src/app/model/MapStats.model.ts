@@ -13,6 +13,7 @@ export class MapStats {
   public TotalWins:number;
   public TotalKills:number;
   public TotalDeaths:number;
+  public TotalAssists:number;
   public MapName:string;
   public MapImageUrl:string;
 

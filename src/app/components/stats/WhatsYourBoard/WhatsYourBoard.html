@@ -1,12 +1,16 @@
+<input #t id="playerName" [(ngModel)]="playerName" (change)="playerChanged($event,t.value)"/>
 <br>
+Data for {{PlayerName}} over the last {{totalRecords}} games
 <table>
   <tr>
     <th>Map Name</th>
     <th>Total Plays</th>
     <th>Total Wins</th>
     <th>Win %</th>
-    <th>Avg Game</th>
+    <th>Avg Game (Kills - Deaths)</th>
+    <th>Avg Game (KDA)</th>
     <th>Avg Kills</th>
+    <th>Avg Assists</th>
     <th>Avg Deaths</th>
   </tr>
   <tr *ngFor="let mapStat of mapStatsArray">
@@ -14,8 +18,10 @@
     <td>{{mapStat.TotalMatches}}</td>
     <td>{{mapStat.TotalWins}}</td>
     <td>{{mapStat.TotalWins/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalKills - mapStat.TotalDeaths)/mapStat.TotalMatches | percent}}</td>
+    <td>{{(mapStat.TotalKills - mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
+    <td>{{(mapStat.TotalKills + (1/3)*mapStat.TotalAssists - mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
     <td>{{(mapStat.TotalKills)/mapStat.TotalMatches}}</td>
+    <td>{{(mapStat.TotalAssists)/mapStat.TotalMatches}}</td>
     <td>{{(mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
 
   </tr>

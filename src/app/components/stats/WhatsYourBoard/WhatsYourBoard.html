@@ -1,4 +1,6 @@
-<input #t id="playerName" [(ngModel)]="playerName" (change)="playerChanged($event,t.value)"/>
+<input #t id="playerName" [(ngModel)]="playerName" (change)="playerChanged($event,t.value)" placeholder="Player Name"/>
+
+
 <br>
 Data for {{PlayerName}} over the last {{totalRecords}} games
 <table>
@@ -14,15 +16,17 @@ Data for {{PlayerName}} over the last {{totalRecords}} games
     <th>Avg Deaths</th>
   </tr>
   <tr *ngFor="let mapStat of mapStatsArray">
-    <td>{{mapStat.MapName.name}}</td>
+    <td title="{{mapStat.MapData.description}}">{{mapStat.MapData.name}}</td>
     <td>{{mapStat.TotalMatches}}</td>
     <td>{{mapStat.TotalWins}}</td>
-    <td>{{mapStat.TotalWins/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalKills - mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalKills + (1/3)*mapStat.TotalAssists - mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalKills)/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalAssists)/mapStat.TotalMatches}}</td>
-    <td>{{(mapStat.TotalDeaths)/mapStat.TotalMatches}}</td>
+    <td>{{(mapStat.TotalWins/mapStat.TotalMatches)| percent:'.2'}}</td>
+    <td>{{(mapStat.TotalKills - mapStat.TotalDeaths)/mapStat.TotalMatches| number:'.1'}}</td>
+    <td>{{ mapStat.KDA | number:'.1'}}</td>
+    <td>{{(mapStat.TotalKills)/mapStat.TotalMatches| number:'.1'}}</td>
+    <td>{{(mapStat.TotalAssists)/mapStat.TotalMatches| number:'.1'}}</td>
+    <td>{{(mapStat.TotalDeaths)/mapStat.TotalMatches| number:'.1'}}</td>
 
   </tr>
 </table>
+<br>
+<button md-raised-button>Raised Button Example</button>

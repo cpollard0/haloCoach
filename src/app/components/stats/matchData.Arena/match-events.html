@@ -1,7 +1,11 @@
-<select id="playerDropDown" title="Player Dropdown" [(ngModel)]="playerDD">
+<select id="playerDropDown" title="Player Dropdown" [(ngModel)]="playerDD" (change)="analyzePlayerMatch($event);">
   <option [ngValue]="player" *ngFor="let player of playerEvents">{{player}}</option>
 </select>
 
+<div id="playerStats" *ngIf="playerDD && playerDD != 'All Players'">
+  If you select a player this will pop {{playerDD}}<br>
+  Worst death streak: {{getDeathStreak(playerDD)}}
+</div>
 
 <table>
   <tr *ngFor="let gameEvent of GameEvents">

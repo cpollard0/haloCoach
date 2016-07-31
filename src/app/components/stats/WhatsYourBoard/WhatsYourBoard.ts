@@ -11,20 +11,22 @@ import {SeasonDropdown} from '../../metadata/season-dropdown/season-dropdown';
 import {MatchOverview} from '../../../model/MatchOverview.model'
 import {MapStats} from '../../../model/MapStats.model';
 import {MapMetadata} from '../../../model/MapMetadata.model';
+import {MD_BUTTON_DIRECTIVES} from '@angular2-material/button'
+import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 
 @Component({
   selector: 'whats-your-board',
   pipes: [],
   inputs: ['playerName'],
   providers: [Halo5API],
-  directives: [ROUTER_DIRECTIVES, SeasonDropdown],
+  directives: [ROUTER_DIRECTIVES, SeasonDropdown, MD_BUTTON_DIRECTIVES, MD_INPUT_DIRECTIVES],
   templateUrl: './WhatsYourBoard.html',
 })
 
 
 export class WhatsYourBoard {
   public pMatchOver:Array<MatchOverview>;
-  private totalRecords:number = 125;
+  private totalRecords:number = 25;
   public mapStats:MapStats;
   public MapData:Array<MapMetadata>;
   public PlayerName:string;
@@ -117,6 +119,7 @@ export class WhatsYourBoard {
     var mpArrLocal = new Array<MapStats>();
 
     this.mapStatsArray = mpArrLocal;
+    console.log(this.pMatchOver);
     distinctMapArray.forEach(
       function (matchId) {
         matchEvents = this.pMatchOver.filter(function (gameEvent) {
@@ -164,13 +167,14 @@ export class WhatsYourBoard {
             return total + 1;
           else return total;
         }, 0);
-        mpLocal.MapName = this.MapData.filter(item => item.contentId == matchId)[0];
+        mpLocal.MapData = this.MapData.filter(item => item.contentId == matchId)[0];
+        mpLocal.calcKDA(mpLocal.TotalKills, mpLocal.TotalAssists, mpLocal.TotalDeaths, mpLocal.TotalMatches);
         mpArrLocal.push(mpLocal);
         //mapRcd.mapId = matchOutcome;
         //mapRcd.wins = 5;
       }
       , this);
-    console.log(mpArrLocal);
+    console.log(this.MapData);
     mpArrLocal.sort(function (a, b) {
       return (b.TotalKills - b.TotalDeaths) / b.TotalMatches - (a.TotalKills - a.TotalDeaths) / a.TotalMatches;
     });

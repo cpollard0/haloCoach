@@ -2,6 +2,7 @@
  * Created by Chris on 7/24/16.
  */
 export class MapStats {
+  public MapData:any;
   public MapId:string;
   public MostKills:number;
   public LeastKills:number;
@@ -14,10 +15,13 @@ export class MapStats {
   public TotalKills:number;
   public TotalDeaths:number;
   public TotalAssists:number;
-  public MapName:string;
-  public MapImageUrl:string;
+  public KDA:number;
 
   public constructor(input) {
     this.MapId = input;
+  }
+
+  public calcKDA(TotalKills:number, TotalAssists:number, TotalDeaths:number, TotalMatches:number) {
+    this.KDA = (TotalKills + (1 / 3) * TotalAssists - TotalDeaths) / TotalMatches;
   }
 }

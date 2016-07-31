@@ -9,11 +9,11 @@ import {MatchEvent} from '../../../model/matchEvent.model'
 import {Weapon} from '../../../model/Weapon.model'
 import {PlayerEvents} from '../../../model/PlayerEvents.model'
 import {WorldLocation} from '../../../model/WorldLocation.model'
-import {filterPip} from '../../../PipeFilter'
+import {filterPipe} from '../../../PipeFilter'
 
 @Component({
   selector: 'match-events',
-  pipes: [],
+  pipes: [filterPipe],
   providers: [Halo5API],
   directives: [ROUTER_DIRECTIVES],
   templateUrl: './match-events.html',
@@ -61,8 +61,8 @@ export class MatchEvents {
               // the third argument is a function which runs on completion
               () => {
                 this.addWeaponToEvent();
-                this.analyzePlayerMatch("MrPierceClayton");
-                this.getDeathStreak("MrPierceClayton");
+                //this.analyzePlayerMatch("MrPierceClayton");
+                //this.getDeathStreak("MrPierceClayton");
                 this.playerEvents = this.getDistinctPlayers();
               }
             );
@@ -136,7 +136,9 @@ export class MatchEvents {
    Death from above; having the high ground helps! you died X times when the enemy was higher then you and got Y kills
    DPK - Damage per kills is off; you're not finishing off kills! Figure out how much damage it takes for a single kill
    */
-  public analyzePlayerMatch(playerName:string) {
+  public analyzePlayerMatch($event) {
+    var playerName = $event.target.value.substring(3);
+
     var currentWeapons = [];
     this.GameEvents.map(function (gameEvent) {
       if (gameEvent.Player != null && gameEvent.Player.Gamertag == playerName) {
@@ -161,15 +163,15 @@ export class MatchEvents {
 
 
   getDeathStreak(playerName:string) {
+    console.log("In death streak");
     var currentDeathStreak = 0;
     var currentKillStreak = 0;
     var lastWorldLocation = new WorldLocation();
 
-    //first pull out all this users death
-    //ToDo: figure out why this gives me an error in the console
+    //first pull out all this users death 
     this.killsDeaths = this.GameEvents.filter(function (gameEvent) {
         if (gameEvent.EventName == "Death" && gameEvent.Killer != null && gameEvent.Victim != null && (gameEvent.Killer.Gamertag == playerName || gameEvent.Victim.Gamertag == playerName))
-          return gameEvent;
+          return true;
 
       }
     );

@@ -55,8 +55,9 @@ export class Halo5API {
 
     this.headers.append('Ocp-Apim-Subscription-Key', 'c2a9961279f34f89b478c962a083b2eb');
     this.headers.append('Access-Control-Allow-Origin', '*');
-    this.headers.append('X-Proxy-Url', 'https://www.haloapi.com/' + path);
-    let url = 'http://52.21.253.156/';
+    //this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    //this.headers.append('X-Proxy-Url', 'https://www.haloapi.com/' + path);
+    let url = 'https://www.haloapi.com/' + path;
     //this.config.ApiUrl + '/${ path }';
     return this.http.get(url, {headers: this.headers})
       .map(res => res.json());

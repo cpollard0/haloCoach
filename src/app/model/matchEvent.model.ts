@@ -7,7 +7,7 @@ import {WorldLocation} from './WorldLocation.model'
 export class MatchEvent {
   EventName:string;
   TimeSinceStart:string;
-  Player:PlayerClass;
+  Player:string;
   ShotsFired:number;
   ShotsLanded:number;
   TimeWeaponActiveAsPrimary:string;
@@ -19,9 +19,9 @@ export class MatchEvent {
   IsMelee:boolean;
   IsShoulderBash:boolean;
   IsWeapon:boolean;
-  Killer:PlayerClass;
+  Killer:string;
   KillerAgent:number;
-  Victim:PlayerClass;
+  Victim:string;
   VictimAgent:number;
   KillerWorldLocation:WorldLocation;
   VictimWorldLocation:WorldLocation;
@@ -30,7 +30,8 @@ export class MatchEvent {
   WeaponStockId:number;
   KillerWeaponStockId:number;
   KillerWeaponName:string;
-
+  TimeBetweenEvents:number;
+  TimeSinceSpawn:number;
   constructor() {
 
   }
@@ -53,12 +54,15 @@ export class MatchEvent {
     this.IsShoulderBash = input.IsShoulderBash;
     this.IsWeapon = input.IsWeapon;
     if (input.Player != null)
-      this.Player = new PlayerClass().deserialize(input.Player);
+      this.Player = input.Player.Gamertag;
+    //this.Player = new PlayerClass().deserialize(input.Player);
     if (input.Killer != null)
-      this.Killer = new PlayerClass().deserialize(input.Killer);
+      this.Killer = input.Killer.Gamertag;
+    //this.Killer = new PlayerClass().deserialize(input.Killer);
     this.KillerAgent = input.KillerAgent;
     if (input.Victim != null)
-      this.Victim = new PlayerClass().deserialize(input.Victim);
+      this.Victim = input.Victim.Gamertag;
+    //this.Victim = new PlayerClass().deserialize(input.Victim);
     this.VictimAgent = input.VictimAgent;
     if (input.KillerWorldLocation != null)
       this.KillerWorldLocation = new WorldLocation().deserialize(input.KillerWorldLocation);

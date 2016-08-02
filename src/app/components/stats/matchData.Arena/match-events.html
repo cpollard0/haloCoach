@@ -1,26 +1,45 @@
 <select id="playerDropDown" title="Player Dropdown" [(ngModel)]="playerDD" (change)="analyzePlayerMatch($event);">
+  <option [ngValue]="All">All Players</option>
   <option [ngValue]="player" *ngFor="let player of playerEvents">{{player}}</option>
 </select>
 
-<div id="playerStats" *ngIf="playerDD && playerDD != 'All Players'">
-  If you select a player this will pop {{playerDD}}<br>
-  Worst death streak: {{getDeathStreak(playerDD)}}
-</div>
+<select id="eventDropDown" title="Event Dropdown" [(ngModel)]="eventDD">
+  <option [ngValue]="All">All Events</option>
+  <option [ngValue]="event" *ngFor="let event of matchEventTypes">{{event}}</option>
+</select>
 
+<div id="playerStats" *ngIf="playerDD && playerDD != 'All' && playerDD !='0: undefined'">
+  STATS FOR {{playerDD}} <br>
+  {{getMatchStats(playerDD)}}<br>
+  {{getDeathStreak()}}
+
+</div>
+<br>
 <table>
-  <tr *ngFor="let gameEvent of GameEvents">
-    <td>{{gameEvent.Player?.Gamertag}}</td>
+  <tr>
+    <th>Time</th>
+    <th>Event</th>
+    <th>Note</th>
+  </tr>
+  <tr *ngFor="let gameEvent of GameEvents|filterByPlayer:{Player:playerDD}|filterByEvent:{EventName:eventDD}">
+    <td align="right">{{gameEvent.TimeSinceStart|convertMatchTime}}</td>
     <td>{{gameEvent.EventName}}</td>
-    <td>{{gameEvent.TimeSinceStart}}</td>
+    <td *ngIf="gameEvent.EventName=='WeaponPickup'">{{gameEvent.Player}} picked up {{gameEvent.WeaponName}}</td>
+    <td *ngIf="gameEvent.EventName=='WeaponDrop'">{{gameEvent.Player}} dropped {{gameEvent.WeaponName}}</td>
+    <td *ngIf="gameEvent.EventName=='PlayerSpawn'">{{gameEvent.Player}} spawned</td>
+
+
     <!--<td *ngIf="gameEvent.IsDeath">{{gameEvent.Killer?.Gamertag}} killed {{gameEvent.Victim?.Gamertag}}</td>-->
-    <td *ngIf="gameEvent.Killer?.Gamertag">
-      {{gameEvent.Killer?.Gamertag}} killed {{gameEvent.Victim?.Gamertag}} at {{gameEvent.VictimWorldLocation?.x}}
+    <td *ngIf="gameEvent.Killer">
+      {{gameEvent.Killer}} killed {{gameEvent.Victim}} at {{gameEvent.VictimWorldLocation?.x}}
 
     <span *ngIf="gameEvent.KillerWorldLocation.z > gameEvent.VictimWorldLocation.z">Death from above at a height of
     {{gameEvent.KillerWorldLocation.z - gameEvent.VictimWorldLocation.z}}
     </span>
     </td>
-
+    <td>Time Between Events:{{gameEvent.TimeBetweenEvents}}<BR>
+      Time Since Last Spawn:{{gameEvent.TimeSinceSpawn}}
+    </td>
 
   </tr>
 
